@@ -43,72 +43,12 @@ $v | Select-Object ProductName, EditionID, DisplayVersion, CurrentBuild, UBR
 
 This project starts from the official AtlasOS `0.4.1` source, the last AtlasOS release designed to support Windows 10.
 
-### Windows 10 LTSC 2021 build support
-
-Build `19044` was added to `SupportedBuilds` in `playbook.conf`:
-
-```xml
-<SupportedBuilds>
-    <!-- Windows 10 21H2 / IoT Enterprise LTSC 2021 -->
-    <string>19044</string>
-
-    <!-- Windows 10 22H2 -->
-    <string>19045</string>
-
-    <!-- Windows 11 24H2 -->
-    <string>26100</string>
-</SupportedBuilds>
-```
-
-This allows AME Beta to perform its build check on Windows 10 IoT Enterprise LTSC 2021. It does not make every Atlas action universally compatible with every LTSC configuration.
-
-### Separate local-fork identity
-
-The playbook name, author label, title and `UniqueId` were changed so the modified package no longer presents itself as an untouched official AtlasOS package.
-
-Example metadata:
-
-```xml
-<Name>LTSCFork</Name>
-<Username>Local</Username>
-<Title>Atlas v0.4.1 LTSC Local Fork</Title>
-```
-
-The fork must use its own generated UUID. Do not copy the UUID from this README or reuse AtlasOS's official identity. Generate one with:
-
-```powershell
-[guid]::NewGuid()
-```
-
-### Official verification removed from local builds
-
-Any modification changes the verified AtlasOS artifact. Local packages are therefore built with Atlas's own development option:
-
-```powershell
--Removals Verification
-```
-
-AME should show this fork as **Unverified**. That is expected and honest. It should not show the package as verified, because the AtlasOS and Ameliorated teams have not reviewed this modified build.
-
-### Installation-time error handling
-
-Two small reliability changes from the newer Atlas hotfix were applied to the v0.4.1 source:
-
-1. The Reserved Storage DISM action uses `ignoreErrors: true`.
-2. The final `w32tm /resync` action uses `ignoreErrors: true`.
-
-These flags do not hide every error and do not repair failed Windows components. They only prevent two noncritical commands from aborting the entire AME run. This is useful on LTSC, where Reserved Storage may be unavailable and immediate time synchronization can fail temporarily while networking or the Windows Time service is still starting.
-
-Relevant files:
-
-```text
-src/playbook/Configuration/tweaks/debloat/disable-reserved-storage.yml
-src/playbook/Configuration/tweaks/misc/config-time.yml
-```
+- Windows 10 LTSC 2021 build support
+- Separate local-fork identity
+- Official verification removed from local builds
+- Installation-time error handling
 
 ## What Was Not Ported
-
-This is not a Windows 10 conversion of AtlasOS v0.5.0. It remains based on v0.4.1.
 
 The following v0.5 systems have not been copied into this fork:
 
@@ -140,29 +80,6 @@ Export installed third-party drivers with:
 ```cmd
 pnputil /export-driver * C:\Drivers
 ```
-
-## Building the Playbook
-
-Install 7-Zip, open PowerShell and run the build script from the playbook source directory:
-
-```powershell
-Set-Location .\src\playbook
-
-powershell -ExecutionPolicy Bypass `
-  -File ..\dependencies\local-build.ps1 `
-  -Removals Verification `
-  -FileName "LTSCFork-UNVERIFIED"
-```
-
-The generated file will be created in the current playbook directory:
-
-```text
-LTSCFork-UNVERIFIED.apbx
-```
-
-Load that APBX into the latest AME Beta. The expected trust label is **Unverified**.
-
-If AME labels it **Malicious**, do not continue. Confirm that the official `ProductCode` was removed from the built package and that your fork uses a new `UniqueId`, short custom `Name`, custom `Username` and custom `Title`.
 
 ## Installation Notes
 
