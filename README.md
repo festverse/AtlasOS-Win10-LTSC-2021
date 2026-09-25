@@ -6,16 +6,15 @@ I made this fork for my own Windows 10 IoT Enterprise LTSC 2021 installation and
 
 This is not a new version of Windows, a custom ISO or an official AtlasOS release. It is a modified AME playbook that must be applied to an existing, properly licensed Windows installation.
 
-## Important Warning
-
-This project is **unofficial and unsupported**.
-
-- It is not maintained, tested, approved or supported by the AtlasOS team.
-- It is not maintained, tested, approved or supported by Ameliorated.
-- I do not provide formal or guaranteed support for this fork.
-- This project is published for educational and personal use.
-- Applying an AME playbook makes deep changes to Windows and may require a clean reinstall to undo.
-- You are responsible for your files, Windows installation, activation, recovery media and hardware.
+> [!WARNING]
+>
+> This project is **unofficial and unsupported**.
+>
+> It is not maintained, tested, approved or supported by either the AtlasOS team or Ameliorated.
+> I do not provide formal or guaranteed support for this fork.
+> This project is published for educational and personal use.
+> Applying an AME playbook makes deep changes to Windows and may require a clean reinstall to undo.
+> You are responsible for your files, Windows installation, activation, recovery media and hardware.
 
 You are still welcome to open an issue if you find a reproducible bug or get stuck. I or another community member may be able to suggest something but responses and fixes are not guaranteed. Please include useful details such as your Windows edition, full build number, AME version, selected options, error message and relevant log output.
 
@@ -60,7 +59,7 @@ The following v0.5 systems have not been copied into this fork:
 - The complete v0.5 Atlas Folder rewrite
 - v0.5 default-user and new-user orchestration
 
-Copying those systems into v0.4.1 without a complete compatibility audit could leave Windows partially configured or unbootable.
+These systems are specific to Windows 11 and are neither needed nor compatible with Windows 10 LTSC.
 
 ## Before Installation
 
